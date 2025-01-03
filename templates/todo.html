@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>home</title>
+  <!-- Include Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <style>
+    body {
+      background-color :gradient(to right, #98d1f8, #214f62); 
+      font-family: 'Arial', sans-serif;
+    }
+    .form-container {
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .form-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-header h2 {
+      color: #007bff;
+    }
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <div class="form-header">
+      <h2>Submit Your Details</h2>
+      <p>Fill in the form below to add your information</p>
+    </div>
+    <form action="{{ url_for('todo') }}" method="post">
+      <div class="form-group mb-3">
+        <label for="formTitle" class="form-label">Title</label>
+        <input type="text" class="form-control" id="formTitle" name="title" placeholder="Enter title" required>
+      </div>
+      <div class="form-group mb-3">
+        <label for="formEmail" class="form-label">Email Address</label>
+        <input type="email" class="form-control" id="formEmail" name="email" placeholder="name@example.com" required>
+      </div>
+      <div class="form-group mb-3">
+        <label for="formDateCreated" class="form-label">Date Created</label>
+        <input type="date" class="form-control" id="formDateCreated" name="date_created" required>
+      </div>
+      <button type="submit" class="btn btn-outline-secondary w-100">Submit</button>
+    </form>
+  </div>
+  {% if allTodo|length == 0 %}
+  <div class="alert alert-danger" role="alert">
+      A simple danger alert—check it out! Add your first todo now.
+  </div>
+{% else %}
+  <table class="table">
+      <thead>
+          <tr>
+              <th scope="col">S.No</th>
+              <th scope="col">Title</th>
+              <th scope="col">Email</th>
+              <th scope="col">Date Created</th>
+              <th scope="col">Actions</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for a in allTodo %}
+          <tr>
+              <th scope="row">{{ loop.index }}</th>
+              <td>{{ a.title }}</td>
+              <td>{{ a.email }}</td>
+              <td>{{ a.date_created }}</td>
+              <td>
+                  <a href="/update/{{ a.sno }}" class="btn btn-outline-dark btn-sm mx-1">Update</a>
+                  <a href="/delete/{{ a.sno }}" class="btn btn-outline-dark btn-sm mx-2">Delete</a>
+              </td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+{% endif %}
+
+
+  <!-- Include Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+</body>
+</html>
